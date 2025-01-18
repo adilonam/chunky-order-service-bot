@@ -50,4 +50,4 @@ jobs:
             docker pull adilmm/chunky-order-service-bot:latest
             docker stop chunky-order-service-bot || true
             docker rm chunky-order-service-bot || true
-            docker run -d --name chunky-order-service-bot adilmm/chunky-order-service-bot:latest
+            docker run -d --name chunky-order-service-bot -e TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }} adilmm/chunky-order-service-bot:latest
