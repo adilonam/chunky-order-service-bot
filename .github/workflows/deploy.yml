@@ -45,6 +45,7 @@ jobs:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
           port: ${{ secrets.VM_PORT }} 
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             docker pull adilmm/chunky-order-service-bot:latest
             docker stop chunky-order-service-bot || true
