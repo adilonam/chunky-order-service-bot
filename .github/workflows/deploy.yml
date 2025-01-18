@@ -34,13 +34,17 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Connect to the VM and deploy
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
       - name: Deploy to VM
         uses: appleboy/ssh-action@v0.1.9
         with:
           host: ${{ secrets.VM_HOST }}
           username: ${{ secrets.VM_USER }}
-          port: ${{ secrets.VM_PORT }}
+          port: ${{ secrets.VM_PORT }} 
           script: |
             docker pull adilmm/chunky-order-service-bot:latest
             docker stop chunky-order-service-bot || true
