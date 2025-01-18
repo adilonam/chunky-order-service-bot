@@ -1,0 +1,49 @@
+name: Deploy to Docker Hub and VM
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    name: Build and Push Docker Image
+    runs-on: self-hosted
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Log in to Docker Hub
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      # Build and push the Docker image
+      - name: Build and push Docker image
+        run: |
+          docker build -t adilmm/chunky-order-service-bot:latest .
+          docker push adilmm/chunky-order-service-bot:latest
+
+  # deploy-to-vm:
+  #   name: Deploy to VM
+  #   needs: build-and-push
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #     # Connect to the VM and deploy
+  #     - name: Deploy to VM
+  #       uses: appleboy/ssh-action@v0.1.9
+  #       with:
+  #         host: ${{ secrets.VM_HOST }}
+  #         username: ${{ secrets.VM_USER }}
+  #         password: ${{ secrets.VM_PASSWORD }}
+  #         port: ${{ secrets.VM_PORT }}
+  #         script: |
+  #           docker pull adilmm/chunky-order-service-bot:latest
+  #           docker stop chunky-order-service-bot || true
+  #           docker rm chunky-order-service-bot || true
+  #           docker run -d --name chunky-order-service-bot -p 8080:8080 adilmm/chunky-order-service-bot:latest
