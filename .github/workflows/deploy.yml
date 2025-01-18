@@ -37,7 +37,7 @@ jobs:
       - name: Setup SSH
         uses: webfactory/ssh-agent@v0.5.3
         with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} -C ""
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} -C ''
 
       - name: Deploy to VM
         uses: appleboy/ssh-action@v0.1.9
