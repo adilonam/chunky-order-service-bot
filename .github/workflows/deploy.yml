@@ -34,10 +34,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # - name: Setup SSH
-      #   uses: webfactory/ssh-agent@v0.5.3
-      #   with:
-      #     ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }} 
 
       - name: Deploy to VM
         uses: appleboy/ssh-action@v0.1.9
@@ -51,4 +47,3 @@ jobs:
             docker stop chunky-order-service-bot || true
             docker rm chunky-order-service-bot || true
             docker run -d --name chunky-order-service-bot -e TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }} adilmm/chunky-order-service-bot:latest
-#   docker run  --name chunky-order-service-bot-2 -e TELEGRAM_TOKEN=8163014619:AAFR1NucL0ndPenp5nTjurcvc1rNcmggzFg adilmm/chunky-order-service-bot:latest

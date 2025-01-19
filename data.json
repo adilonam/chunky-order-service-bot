@@ -1,0 +1,58 @@
+[
+    {"id": "S841", "name": "Sprit Runtz Smalls", "price": 1000, "type": "Tools"},
+    {"id": "S822", "name": "JetFuel Candy Smalls", "price": 1050, "type": "Tools"},
+    {"id": "S830", "name": "Candiee Frostiee", "price": 1150, "type": "Tools"},
+    {"id": "S836", "name": "Don. Lollipop", "price": 1175, "type": "Tools"},
+    {"id": "S840", "name": "Pink Starburst", "price": 1200, "type": "Tools"},
+    {"id": "S838", "name": "Hi Chew Candy", "price": 1200, "type": "Tools"},
+    {"id": "RM46", "name": "Black Mirror Snowfest", "price": 1400, "type": "Tools"},
+    {"id": "RM47", "name": "Vapor Throne", "price": 1400, "type": "Tools"},
+    {"id": "SB02", "name": "Zuper Runtz Swno Caps", "price": 950, "type": "Tools"},
+
+
+    {"id": "SK01", "name": "Nimbus Runtz Shake Mix", "price": 350, "type": "Shake Trim Micros"},
+
+
+    {"id": "B515", "name": "Cigar Ape", "price": 625, "type": "Budget Indoor Exotics"},
+    {"id": "B512", "name": "Melody Berry", "price": 625, "type": "Budget Indoor Exotics"},
+    {"id": "B517", "name": "Dirty Runtz", "price": 650, "type": "Budget Indoor Exotics"},
+    {"id": "B516", "name": "Milano Gelato", "price": 725, "type": "Budget Indoor Exotics"},
+    {"id": "B511", "name": "White Cherry Runtz", "price": 825, "type": "Budget Indoor Exotics"},
+    {"id": "B499", "name": "Reel LCG", "price": 850, "type": "Budget Indoor Exotics"},
+    {"id": "B508", "name": "Gorilla Truffle", "price": 850, "type": "Budget Indoor Exotics"},
+    {"id": "B509", "name": "Wonder Bubba ZA", "price": 850, "type": "Budget Indoor Exotics"},
+    {"id": "B505", "name": "33 CheriZ", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B502", "name": "Doja Sherbanger", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B507", "name": "F1 Gusher", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B513", "name": "Ice Cream Runtz", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B500", "name": "Indigo Runtz", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B506", "name": "Pink Runtz", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B495", "name": "Sushi Zkittles", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B497", "name": "Nitro Gemini", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B489", "name": "MAC Goofiez", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B490", "name": "Runtz Dance", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B482", "name": "Runtz Jealousy", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B492", "name": "Rainbow Sherbet", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B514", "name": "White Gummies", "price": 875, "type": "Budget Indoor Exotics"},
+    {"id": "B483", "name": "Koolin Gelato", "price": 900, "type": "Budget Indoor Exotics"},
+    {"id": "B491", "name": "Zuper Black Runtz", "price": 900, "type": "Budget Indoor Exotics"},
+
+
+    {"id": "A870", "name": "Gelato 41", "price": 1100, "type": "Indoor FIRE Exotics"},
+    {"id": "A862", "name": "Carbon Melon", "price": 1150, "type": "Indoor FIRE Exotics"},
+    {"id": "A874", "name": "Super Boof", "price": 1150, "type": "Indoor FIRE Exotics"},
+    {"id": "A871", "name": "Raspberry Gumbo", "price": 1175, "type": "Indoor FIRE Exotics"},
+    {"id": "A883", "name": "Animal Gelato BX1", "price": 1200, "type": "Indoor FIRE Exotics"},
+    {"id": "A872", "name": "Y2K Mac King", "price": 1200, "type": "Indoor FIRE Exotics"},
+    {"id": "A885", "name": "GMO Zkittles", "price": 1350, "type": "Indoor FIRE Exotics"},
+    {"id": "A869", "name": "Pistachio Runtz", "price": 1375, "type": "Indoor FIRE Exotics"},
+    {"id": "A873", "name": "Lagoon Runtz", "price": 1375, "type": "Indoor FIRE Exotics"},
+
+   
+    {"id": "A884", "name": "Rainbow Slurpeee", "price": 1400, "type": "Indoor SUPER Exotics"},
+    {"id": "A861", "name": "Lemon Cherry Starburst", "price": 1500, "type": "Indoor SUPER Exotics"},
+    {"id": "A860", "name": "Ya Ya", "price": 1550, "type": "Indoor SUPER Exotics"},
+    {"id": "A882", "name": "Krypto Gum", "price": 1550, "type": "Indoor SUPER Exotics"},
+    {"id": "A859", "name": "Mr. Gummiez", "price": 1600, "type": "Indoor SUPER Exotics"},
+    {"id": "A858", "name": "Gobby Runtz", "price": 1600, "type": "Indoor SUPER Exotics"}
+]
