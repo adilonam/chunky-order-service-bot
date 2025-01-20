@@ -18,13 +18,20 @@ with open('data.json', 'r') as f:
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
     user_message = update.message.text
-    chat_id = update.message.chat_id
     user_data = context.user_data
 
-    if user_message == '/start':
-        await update.message.reply_text(f'Enter the customer name to start a new order with Dollar.')
+    if user_message in ['/sc' , '/su' , '/sd']:
+        if user_message == '/sc':
+            shop = 'Chunky'
+        elif user_message == '/su':
+            shop = 'Uno'
+        elif user_message == '/sd':
+            shop = 'Dollar'
+        await update.message.reply_text(f'Enter the customer name to start a new order with {shop}.')
         user_data['expecting'] = 'customer_name'
         user_data['orders'] = []
+        user_data['shop'] = shop
+        
     elif user_data.get('expecting') == 'customer_name':
         await update.message.reply_text(f'Starting order for {user_message}\nEnter items in format: ITEMCODE QUANTITY')
         user_data['expecting'] = 'item_code'
@@ -33,7 +40,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         if user_message.lower() == 'done':
             # Print the bill
             current_date = datetime.now().strftime("%m/%d")
-            bill = f"{current_date}\n#\n{user_data['customer_name']} - D\n\n"
+            bill = f"{current_date}\n#\n{user_data['customer_name']} - {user_data['shop'][0]}\n\n"
             total = 0
             for order in user_data['orders']:
                 bill += f"{order['quantity']} P #{order['id']} - {order['name']} = ${order['price'] * order['quantity']}\n"
