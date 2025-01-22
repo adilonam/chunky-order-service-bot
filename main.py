@@ -21,6 +21,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     user_data = context.user_data
 
     if user_message in ['/sc' , '/su' , '/sd']:
+        user_data.clear()
         if user_message == '/sc':
             shop = 'Chunky'
         elif user_message == '/su':
@@ -64,6 +65,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             else:
                 await update.message.reply_text(f'Item code {item_code} not found.')
             user_data['expecting'] = 'item_code'  # Continue expecting item codes
+    elif user_message == '/cancel':
+        user_data.clear()
+        await update.message.reply_text('Order cancelled.')
     else:
         await update.message.reply_text(f'Unexpected message: {user_message}')
 
