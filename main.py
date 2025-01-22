@@ -34,7 +34,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         user_data['shop'] = shop
         
     elif user_data.get('expecting') == 'customer_name':
-        await update.message.reply_text(f'Starting order for {user_message}\nEnter items in format: ITEMCODE QUANTITY')
+        await update.message.reply_text(f'Starting order for {user_message}\nEnter items in format: ITEMCODE QUANTITY (bulk enter)\nType "clo" to cancel last order.\nType "done" to finish the order.\nAny time type "/cancel" to cancel all orders.')
         user_data['expecting'] = 'item_code'
         user_data['customer_name'] = user_message
     elif user_data.get('expecting') == 'item_code':
@@ -48,26 +48,34 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 total += order['price'] * order['quantity']
             bill += f"\nTotal: ${total}\n\nAddress:\n\nPaid:\n"
             await update.message.reply_text(bill)
-            user_data.clear()  # Clear the order data
+            
+        elif user_message.lower() == 'clo':
+            if user_data['orders']:
+                user_data['orders'].pop()
+                await update.message.reply_text('Last order cancelled.')
+            else:
+                await update.message.reply_text('No orders to cancel.')
         else:
-            user_message = user_message.upper().split()
-            if len(user_message) != 2:
-                item_code = user_message[0]
-                quantity = 1
-            else:
-                item_code, quantity = user_message
-                quantity = int(quantity)
-            item = next((item for item in items if item['id'] == item_code), None)
-            if item:
-                total_price = item['price'] * quantity
-                await update.message.reply_text(f'{quantity} P #{item["id"]} - {item["name"]} = ${total_price}')
-                user_data['orders'].append({'id': item_code, 'name': item['name'], 'price': item['price'], 'quantity': quantity})
-            else:
-                await update.message.reply_text(f'Item code {item_code} not found.')
+            user_messages = user_message.upper().split('\n')
+            for user_message in user_messages:
+                user_message = user_message.split()
+                if len(user_message) != 2:
+                    item_code = user_message[0]
+                    quantity = 1
+                else:
+                    item_code, quantity = user_message
+                    quantity = int(quantity)
+                item = next((item for item in items if item['id'] == item_code), None)
+                if item:
+                    total_price = item['price'] * quantity
+                    await update.message.reply_text(f'{quantity} P #{item["id"]} - {item["name"]} = ${total_price}')
+                    user_data['orders'].append({'id': item_code, 'name': item['name'], 'price': item['price'], 'quantity': quantity})
+                else:
+                    await update.message.reply_text(f'Item code {item_code} not found.')
             user_data['expecting'] = 'item_code'  # Continue expecting item codes
     elif user_message == '/cancel':
         user_data.clear()
-        await update.message.reply_text('Order cancelled.')
+        await update.message.reply_text('Orders cancelled.')
     else:
         await update.message.reply_text(f'Unexpected message: {user_message}')
 
