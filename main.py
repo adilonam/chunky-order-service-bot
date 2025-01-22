@@ -34,7 +34,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         user_data['shop'] = shop
         
     elif user_data.get('expecting') == 'customer_name':
-        await update.message.reply_text(f'Starting order for {user_message}\nEnter items in format: ITEMCODE QUANTITY (bulk enter)\nType "clo" to cancel last order.\nType "done" to finish the order.\nAny time type "/cancel" to cancel all orders.')
+        await update.message.reply_text(f'Starting order for {user_message}\nEnter items as: ITEMCODE QUANTITY (bulk entries supported across multiple lines).\nType "clo" to cancel last order.\nType "done" to finish the order.\nAny time type "/cancel" to cancel all orders.')
         user_data['expecting'] = 'item_code'
         user_data['customer_name'] = user_message
     elif user_data.get('expecting') == 'item_code':
