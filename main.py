@@ -32,7 +32,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         user_data['expecting'] = 'customer_name'
         user_data['orders'] = []
         user_data['shop'] = shop
-        
+    elif user_message == '/cancel':
+        user_data.clear()
+        await update.message.reply_text('Orders cancelled.')
     elif user_data.get('expecting') == 'customer_name':
         await update.message.reply_text(f'Starting order for {user_message}\nEnter items as: ITEMCODE QUANTITY (bulk entries supported across multiple lines).\nType "clo" to cancel last order.\nType "done" to finish the order.\nAny time type "/cancel" to cancel all orders.')
         user_data['expecting'] = 'item_code'
@@ -73,9 +75,6 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 else:
                     await update.message.reply_text(f'Item code {item_code} not found.')
             user_data['expecting'] = 'item_code'  # Continue expecting item codes
-    elif user_message == '/cancel':
-        user_data.clear()
-        await update.message.reply_text('Orders cancelled.')
     else:
         await update.message.reply_text(f'Unexpected message: {user_message}')
 
