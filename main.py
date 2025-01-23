@@ -46,7 +46,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             bill = f"{current_date}\n#\n{user_data['customer_name']} - {user_data['shop'][0]}\n\n"
             total = 0
             for order in user_data['orders']:
-                bill += f"{order['quantity']} P #{order['id']} - {order['name']} = ${order['price'] * order['quantity']}\n"
+                bill += f"{order['quantity']} P #{order['id']} - {order['name']} = ${order['total_price']}\n"
                 total += order['price'] * order['quantity']
             bill += f"\nTotal: ${total}\n\nAddress:\n\nPaid:\n"
             await update.message.reply_text(bill)
@@ -66,12 +66,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                     quantity = 1
                 else:
                     item_code, quantity = user_message
-                    quantity = int(quantity)
+                    quantity = float(quantity)
                 item = next((item for item in items if item['id'] == item_code), None)
                 if item:
-                    total_price = item['price'] * quantity
+                    total_price = round(item['price'] * quantity, 2)
                     await update.message.reply_text(f'{quantity} P #{item["id"]} - {item["name"]} = ${total_price}')
-                    user_data['orders'].append({'id': item_code, 'name': item['name'], 'price': item['price'], 'quantity': quantity})
+                    user_data['orders'].append({'id': item_code, 'name': item['name'], 'price': item['price'], 'quantity': quantity , 'total_price': total_price})
                 else:
                     await update.message.reply_text(f'Item code {item_code} not found.')
             user_data['expecting'] = 'item_code'  # Continue expecting item codes
