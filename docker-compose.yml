@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   bot:
-    build: .
+    image: adilmm/chunky-order-service-bot:latest
     container_name: chunky_order_service_bot
     environment:
       - TELEGRAM_TOKEN=${TELEGRAM_TOKEN}
