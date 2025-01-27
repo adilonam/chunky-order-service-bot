@@ -5,7 +5,6 @@ import psycopg2
 def get_item_from_db(item_code):
     try:
         environment = os.getenv('ENVIRONMENT', 'dev')
-        print(environment)
         host = 'db' if environment == 'prod' else 'localhost'
         connection = psycopg2.connect(
             dbname=os.getenv('POSTGRES_DB'),
