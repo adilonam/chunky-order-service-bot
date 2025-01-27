@@ -48,4 +48,13 @@ jobs:
             git clone https://github.com/adilonam/chunky-order-service-bot.git /root/chunky-order-service-bot || (cd /root/chunky-order-service-bot && git pull --rebase)
             cd /root/chunky-order-service-bot
             docker compose pull
+            export TELEGRAM_TOKEN=${{ secrets.TELEGRAM_TOKEN }}
+            export VM_HOST=${{ secrets.VM_HOST }}
+            export VM_USER=${{ secrets.VM_USER }}
+            export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+            export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
+            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
+            export PGADMIN_DEFAULT_EMAIL=${{ secrets.PGADMIN_DEFAULT_EMAIL }}
+            export PGADMIN_DEFAULT_PASSWORD=${{ secrets.PGADMIN_DEFAULT_PASSWORD }}
+            export ENVIRONMENT=${{ secrets.ENVIRONMENT }}
             docker compose up -d
