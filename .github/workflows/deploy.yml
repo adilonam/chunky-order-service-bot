@@ -45,5 +45,7 @@ jobs:
           port: ${{ secrets.VM_PORT }} 
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
+            git clone https://github.com/adilonam/chunky-order-service-bot.git /root/chunky-order-service-bot || (cd /root/chunky-order-service-bot && git pull --rebase)
+            cd /root/chunky-order-service-bot
             docker compose pull
             docker compose up -d
