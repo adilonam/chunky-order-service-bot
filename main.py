@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from typing import Final
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
+import psycopg2
 
 # Load the .env file
 load_dotenv()
@@ -78,7 +79,28 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
     else:
         await update.message.reply_text(f'Unexpected message: {user_message}')
 
+def test_db_connection():
+    try:
+        environment = os.getenv('ENVIRONMENT', 'dev')
+        host = 'db' if environment == 'prod' else 'localhost'
+        connection = psycopg2.connect(
+            dbname=os.getenv('POSTGRES_DB'),
+            user=os.getenv('POSTGRES_USER'),
+            password=os.getenv('POSTGRES_PASSWORD'),
+            host=host,  # The service name defined in docker-compose.yml
+            port='5432'
+        )
+        cursor = connection.cursor()
+        cursor.execute("SELECT 1")
+        cursor.fetchone()
+        cursor.close()
+        connection.close()
+        print("Database connection successful")
+    except Exception as e:
+        print(f"Database connection failed: {e}")
+
 def main() -> None:
+    test_db_connection()
     # Create the Application and pass it your bot's token.
     application = Application.builder().token(TOKEN).build()
 
