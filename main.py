@@ -1,11 +1,19 @@
 import os
 import json
+import logging
 from datetime import datetime
 from dotenv import load_dotenv
 from typing import Final
 from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 import psycopg2
+
+from utils.database import get_item_from_db
+
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Load the .env file
 load_dotenv()
@@ -47,7 +55,8 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
             bill = f"{current_date}\n#\n{user_data['customer_name']} - {user_data['shop'][0]}\n\n"
             total = 0
             for order in user_data['orders']:
-                bill += f"{order['quantity']} P #{order['id']} - {order['name']} = ${order['total_price']}\n"
+                _quantity = int(order['quantity']) if order['quantity'].is_integer() else order['quantity']
+                bill += f"{_quantity} P #{order['code']} - {order['name']} = ${order['total_price']}\n"
                 total += order['price'] * order['quantity']
             bill += f"\nTotal: ${total}\n\nAddress:\n\nPaid:\n"
             await update.message.reply_text(bill)
@@ -68,11 +77,12 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                 else:
                     item_code, quantity = user_message
                     quantity = float(quantity)
-                item = next((item for item in items if item['id'] == item_code), None)
+                item = get_item_from_db(item_code)
                 if item:
                     total_price = round(item['price'] * quantity, 2)
-                    await update.message.reply_text(f'{quantity} P #{item["id"]} - {item["name"]} = ${total_price}')
-                    user_data['orders'].append({'id': item_code, 'name': item['name'], 'price': item['price'], 'quantity': quantity , 'total_price': total_price})
+                    _quantity = int(quantity) if quantity.is_integer() else quantity
+                    await update.message.reply_text(f'{_quantity} P #{item["code"]} - {item["name"]} = ${total_price}')
+                    user_data['orders'].append({'code': item_code, 'name': item['name'], 'price': item['price'], 'quantity': quantity , 'total_price': total_price})
                 else:
                     await update.message.reply_text(f'Item code {item_code} not found.')
             user_data['expecting'] = 'item_code'  # Continue expecting item codes
@@ -95,9 +105,9 @@ def test_db_connection():
         cursor.fetchone()
         cursor.close()
         connection.close()
-        print("Database connection successful")
+        logger.info("Database connection successful")
     except Exception as e:
-        print(f"Database connection failed: {e}")
+        logger.error(f"Database connection failed: {e}")
 
 def main() -> None:
     test_db_connection()
