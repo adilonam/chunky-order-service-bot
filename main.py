@@ -8,7 +8,7 @@ from telegram import Update
 from telegram.ext import Application, CommandHandler, ContextTypes, MessageHandler, filters
 import psycopg2
 
-from utils.database import get_item_from_db
+from utils.database import get_item_from_db, get_special_offer_from_db
 
 
 # Configure logging
@@ -79,7 +79,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
                     quantity = float(quantity)
                 item = get_item_from_db(item_code)
                 if item:
-                    total_price = round(item['price'] * quantity, 2)
+                    offer = get_special_offer_from_db(item_code, quantity)
+                    if offer:
+                        total_price = round(offer['price'], 2)
+                    else:
+                        total_price = round(item['price'] * quantity, 2)
                     _quantity = int(quantity) if quantity.is_integer() else quantity
                     await update.message.reply_text(f'{_quantity} P #{item["code"]} - {item["name"]} = ${total_price}')
                     user_data['orders'].append({'code': item_code, 'name': item['name'], 'price': item['price'], 'quantity': quantity , 'total_price': total_price})

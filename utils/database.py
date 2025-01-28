@@ -24,8 +24,35 @@ def get_item_from_db(item_code):
         }
         cursor.close()
         connection.close()
-        print(item)
         return item
     except Exception as e:
         logging.error(f"Failed to fetch item from database: {e}")
+        return None
+
+def get_special_offer_from_db(item_code, quantity):
+    try:
+        environment = os.getenv('ENVIRONMENT', 'dev')
+        host = 'db' if environment == 'prod' else 'localhost'
+        connection = psycopg2.connect(
+            dbname=os.getenv('POSTGRES_DB'),
+            user=os.getenv('POSTGRES_USER'),
+            password=os.getenv('POSTGRES_PASSWORD'),
+            host=host,
+            port='5432'
+        )
+        cursor = connection.cursor()
+        cursor.execute("SELECT * FROM special_offers WHERE product_code = %s AND quantity = %s", (item_code, quantity))
+        offer = cursor.fetchone()
+        offer = {
+            'id' : offer[0],
+            'code': offer[1],
+            'quantity': float(offer[2]),
+            'price': float(offer[3])
+            
+        }
+        cursor.close()
+        connection.close()
+        return offer
+    except Exception as e:
+        logging.info(f"Failed to fetch special offer from database: {e}")
         return None
